@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Mission: Astrobiology & Deep Space Explorer! 🌌🚀</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        nunito: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        spaceBg: '#0f051d',
+                        spaceDark: '#090214',
+                        candyPurple: '#8b5cf6',
+                        candyPink: '#f43f5e',
+                        candyCyan: '#06b6d4',
+                        candyYellow: '#fbbf24',
+                        candyGreen: '#10b981',
+                        cardBg: '#1e1b38'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #0f051d 0%, #1e1b38 50%, #311042 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, .font-title {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090214;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b5cf6;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="relative selection:bg-pink-500 selection:text-white">
+
+    <!-- Starry Background -->
+    <div class="stars-container" id="starsContainer"></div>
+
+    <!-- Main Container -->
+    <div id="app" class="relative z-10 flex flex-col min-h-screen max-w-6xl mx-auto px-4 py-6">
+
+        <!-- HEADER -->
+        <header class="flex flex-wrap items-center justify-between bg-cardBg/90 backdrop-blur-md border-4 border-purple-400/40 rounded-3xl p-4 mb-6 shadow-2xl">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+                <div class="w-12 h-12 bg-gradient-to-tr from-cyan-400 to-indigo-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg floating">
+                    🛸
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-300 via-pink-300 to-yellow-300 bg-clip-text text-transparent font-title">
+                        Cosmic Mission
+                    </h1>
+                    <p class="text-xs text-purple-200 font-semibold">Grade 11 Astrobiology & Deep Space</p>
+                </div>
+            </div>
+
+            <!-- Stats & Controls -->
+            <div class="flex items-center space-x-3 mt-3 sm:mt-0">
+                <div class="bg-purple-950/80 border-2 border-yellow-400/50 rounded-2xl px-4 py-2 flex items-center space-x-2 shadow-inner">
+                    <span class="text-yellow-300 text-xl">⭐</span>
+                    <div>
+                        <div class="text-[10px] text-purple-300 uppercase tracking-wider font-bold">Total Score</div>
+                        <div id="globalScore" class="text-lg font-extrabold text-yellow-300">0</div>
+                    </div>
+                </div>
+
+                <div class="bg-purple-950/80 border-2 border-cyan-400/50 rounded-2xl px-4 py-2 flex items-center space-x-2 shadow-inner">
+                    <span class="text-cyan-300 text-xl">🏆</span>
+                    <div>
+                        <div class="text-[10px] text-purple-300 uppercase tracking-wider font-bold">Badges</div>
+                        <div id="badgeCount" class="text-lg font-extrabold text-cyan-300">0/8</div>
+                    </div>
+                </div>
+
+                <button onclick="toggleSound()" id="soundBtn" class="w-11 h-11 bg-pink-600 hover:bg-pink-500 rounded-2xl flex items-center justify-center text-white text-lg shadow-lg transition transform hover:scale-110 active:scale-95" title="Toggle Sound">
+                    <i id="soundIcon" class="fas fa-volume-up"></i>
+                </button>
+
+                <button onclick="openModal('instructionsModal')" class="w-11 h-11 bg-cyan-600 hover:bg-cyan-500 rounded-2xl flex items-center justify-center text-white text-lg shadow-lg transition transform hover:scale-110 active:scale-95" title="Instructions">
+                    <i class="fas fa-info"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN VIEW -->
+        <main id="mainView" class="flex-grow flex flex-col">
+            <!-- Dynamic Content -->
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="mt-8 text-center text-purple-300/70 text-xs py-4 border-t border-purple-900/50">
+            <p>🌌 Cosmic Mission: Astrobiology & Deep Space Explorer • Grade 11 Science Academy 🌌</p>
+        </footer>
+    </div>
+
+    <!-- INSTRUCTIONS MODAL -->
+    <div id="instructionsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden p-4">
+        <div class="bg-gradient-to-b from-purple-900 to-indigo-950 border-4 border-cyan-400 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+            <button onclick="closeModal('instructionsModal')" class="absolute top-4 right-4 text-cyan-300 hover:text-white text-xl bg-cyan-900/50 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="flex items-center space-x-3 mb-4">
+                <span class="text-3xl">👽</span>
+                <h3 class="text-2xl font-bold text-yellow-300 font-title">Astrobiology & Space Manual</h3>
+            </div>
+            <div class="space-y-3 text-sm text-purple-100 max-h-[60vh] overflow-y-auto pr-2">
+                <p>Welcome cadet! This expansion mission explores the search for extraterrestrial life, exoplanet habitability, stellar evolution, and deep space phenomena tailored for Grade 11 Earth & Space Science.</p>
+                <ul class="list-disc list-inside space-y-2 text-purple-200">
+                    <li><strong>8 New Mini-Games:</strong> Explore Astrobiology, Exoplanet Goldilocks zones, Stellar Life Cycles, Black Holes & Relativistic physics, Space Telescopes, Dark Matter & Dark Energy, Space Exploration History, and the Ultimate Cosmic Boss!</li>
+                    <li><strong>Instant Feedback:</strong> Every question features clear scientific explanations based on modern astrophysics and planetary science.</li>
+                    <li><strong>Score & Badges:</strong> Earn points and unlock cosmic trophies for every mission passed!</li>
+                </ul>
+            </div>
+            <div class="mt-6 text-center">
+                <button onclick="closeModal('instructionsModal')" class="bg-gradient-to-r from-cyan-400 to-indigo-500 text-purple-950 font-bold px-6 py-3 rounded-2xl shadow-lg hover:brightness-110 transition transform hover:scale-105">
+                    Launch Mission! 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO ENGINE -->
+    <script>
+        let soundEnabled = true;
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(440, now);
+                osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            } else if (type === 'correct') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(587.33, now); // D5
+                osc.frequency.setValueAtTime(740.00, now + 0.1); // F#5
+                osc.frequency.setValueAtTime(880.00, now + 0.2); // A5
+                gain.gain.setValueAtTime(0.18, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                osc.start(now);
+                osc.stop(now + 0.35);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.linearRampToValueAtTime(90, now + 0.25);
+                gain.gain.setValueAtTime(0.18, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'win') {
+                const notes = [440, 554.37, 659.25, 880, 1108.73, 1318.51];
+                notes.forEach((freq, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    o.frequency.setValueAtTime(freq, now + idx * 0.07);
+                    g.gain.setValueAtTime(0.12, now + idx * 0.07);
+                    g.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.07 + 0.12);
+                    o.start(now + idx * 0.07);
+                    o.stop(now + idx * 0.07 + 0.12);
+                });
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            if (soundEnabled) {
+                icon.className = "fas fa-volume-up";
+                playSound('click');
+            } else {
+                icon.className = "fas fa-volume-mute";
+            }
+        }
+
+        function openModal(id) {
+            playSound('click');
+            document.getElementById(id).classList.remove('hidden');
+        }
+        function closeModal(id) {
+            playSound('click');
+            document.getElementById(id).classList.add('hidden');
+        }
+    </script>
+
+    <!-- APP LOGIC & GAME CONFIG -->
+    <script>
+        // Generate Starry Background
+        const starsContainer = document.getElementById('starsContainer');
+        for (let i = 0; i < 75; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 1;
+            star.style.width = ${size}px;
+            star.style.height = ${size}px;
+            star.style.top = ${Math.random() * 100}%;
+            star.style.left = ${Math.random() * 100}%;
+            star.style.setProperty('--duration', ${Math.random() * 3 + 1.2}s);
+            starsContainer.appendChild(star);
+        }
+
+        let gameState = {
+            currentView: 'home',
+            score: 0,
+            badges: {
+                astrobiology: false,
+                exoplanets: false,
+                stellar: false,
+                blackholes: false,
+                telescopes: false,
+                darkmatter: false,
+                history: false,
+                cosmicboss: false
+            }
+        };
+
+        function updateGlobalUI() {
+            document.getElementById('globalScore').innerText = gameState.score;
+            const badgeCount = Object.values(gameState.badges).filter(Boolean).length;
+            document.getElementById('badgeCount').innerText = ${badgeCount}/8;
+        }
+
+        function navigateTo(view, gameKey = null) {
+            playSound('click');
+            gameState.currentView = view;
+            const mainView = document.getElementById('mainView');
+            mainView.innerHTML = '';
+
+            if (view === 'home') {
+                renderHomeScreen(mainView);
+            } else if (view === 'game' && gameKey) {
+                renderGame(mainView, gameKey);
+            }
+            updateGlobalUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        const gamesConfig = {
+            astrobiology: {
+                title: "👽 Astrobiology & Life Quest",
+                desc: "Explore biosignatures, extremophiles, and the conditions necessary for life in the universe.",
+                icon: "👽",
+                color: "from-emerald-500 to-cyan-600"
+            },
+            exoplanets: {
+                title: "🪐 Exoplanet Goldilocks Zone",
+                desc: "Discover planets orbiting other stars and identify habitable zones where liquid water can exist.",
+                icon: "🪐",
+                color: "from-blue-500 to-indigo-600"
+            },
+            stellar: {
+                title: "✨ Stellar Evolution & HR Diagram",
+                desc: "Master the Hertzsprung-Russell diagram, stellar nurseries, red giants, and white dwarfs.",
+                icon: "✨",
+                color: "from-yellow-400 to-amber-600"
+            },
+            blackholes: {
+                title: "🌀 Black Holes & Spacetime",
+                desc: "Investigate gravitational singularities, event horizons, time dilation, and quasars.",
+                icon: "🌀",
+                color: "from-purple-600 to-pink-600"
+            },
+            telescopes: {
+                title: "🔭 Space Observatories",
+                desc: "Learn about optical, infrared, radio, and X-ray telescopes like Hubble and James Webb.",
+                icon: "🔭",
+                color: "from-cyan-500 to-blue-700"
+            },
+            darkmatter: {
+                title: "🌌 Dark Matter & Dark Energy",
+                desc: "Unravel the mysterious forces that constitute 95% of the mass-energy content of our universe.",
+                icon: "🌌",
+                color: "from-indigo-700 to-purple-900"
+            },
+            history: {
+                title: "🚀 Space Exploration History",
+                desc: "Journey from Sputnik and the Moon landings to modern Mars rovers and Artemis missions.",
+                icon: "🚀",
+                color: "from-pink-600 to-red-600"
+            },
+            cosmicboss: {
+                title: "🏆 Ultimate Cosmic Boss",
+                desc: "The final supreme challenge combining all astrobiology and deep space concepts!",
+                icon: "🏆",
+                color: "from-amber-400 to-pink-600"
+            }
+        };
+
+        const gameQuestions = {
+            astrobiology: [
+                {
+                    q: "What is astrobiology primarily concerned with studying?",
+                    choices: ["The study of Earth rocks only", "The origin, evolution, distribution, and future of life in the universe", "Weather patterns in Earth's troposphere", "The commercial manufacturing of spacecraft"],
+                    correct: 1,
+                    exp: "Astrobiology investigates how life began, how it adapts to extreme environments, and where else it might exist."
+                },
+                {
+                    q: "What are extremophiles?",
+                    choices: ["Extremely large animals", "Organisms that thrive in harsh physical or geochemical conditions", "Extinct dinosaur species", "Robotic probes sent to Mars"],
+                    correct: 1,
+                    exp: "Extremophiles are hardy microorganisms found in boiling hydrothermal vents, acidic lakes, and frozen ice sheets."
+                },
+                {
+                    q: "Which moon of Saturn is famous for subsurface liquid water oceans and cryovolcanic geysers erupting organic molecules?",
+                    choices: ["Titan", "Enceladus", "Mimas", "Iapetus"],
+                    correct: 1,
+                    exp: "Enceladus sprays water vapor and organic compounds from cracks in its icy crust, powered by tidal heating."
+                },
+                {
+                    q: "What organic compounds are considered the essential building blocks of proteins required by all known life?",
+                    choices: ["Nucleic acids", "Amino acids", "Simple sugars", "Fatty hydrocarbons"],
+                    correct: 1,
+                    exp: "Amino acids link together in chains to form proteins, which perform vital structural and enzymatic functions in cells."
+                },
+                {
+                    q: "Which Jovian moon is believed to hide a vast liquid saltwater ocean beneath a thick crust of surface ice?",
+                    choices: ["Io", "Europa", "Ganymede", "Callisto"],
+                    correct: 2,
+                    exp: "Europa and Ganymede both harbor subsurface oceans kept liquid by tidal flexing from Jupiter's immense gravity."
+                },
+                {
+                    q: "What chemical solvent is universally regarded by astrobiologists as essential for biochemical metabolic reactions?",
+                    choices: ["Liquid methane", "Liquid water", "Liquid ammonia", "Liquid nitrogen"],
+                    correct: 1,
+                    exp: "Liquid water is an exceptional solvent that facilitates biochemical transport and metabolic reactions."
+                },
+                {
+                    q: "What are 'biosignatures' in planetary science?",
+                    choices: ["Signatures signed by astronauts", "Any substance, feature, or phenomenon that provides scientific evidence of past or present life", "Magnetic poles of planets", "Radio signals from stars"],
+                    correct: 1,
+                    exp: "Biosignatures include atmospheric oxygen/methane imbalances, organic molecules, or fossilized microbial mats."
+                },
+                {
+                    q: "What famous equation formulated by Frank Drake estimates the number of active, communicating extraterrestrial civilizations in our galaxy?",
+                    choices: ["Hubble's Law", "Drake Equation", "Einstein's Mass-Energy Formula", "Kepler's Third Law"],
+                    correct: 1,
+                    exp: "The Drake Equation multiplies factors like star formation rate, fraction with planets, and civilization lifespan."
+                },
+                {
+                    q: "Which Saturnian moon features a dense nitrogen atmosphere and lakes of liquid hydrocarbons (methane/ethane)?",
+                    choices: ["Titan", "Enceladus", "Triton", "Charon"],
+                    correct: 0,
+                    exp
